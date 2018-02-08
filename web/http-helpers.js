@@ -17,7 +17,6 @@ exports.serveAssets = function(res, asset, callback) {
     }
     if (data) {
       data = data.toString();
-      console.log(data);
       callback(data);
     }
   });

@@ -13,6 +13,9 @@ var https = require('https');
 
 archive.readListOfUrls( (urls) => {
   archive.downloadUrls(urls, (url) => {
+    if (url === '' || url === '\n') {
+      return;
+    }
     var concatenatedUrl = 'https://' + url;
     console.log(concatenatedUrl);
     https.get(concatenatedUrl, (res) => {

@@ -59,14 +59,18 @@ exports.handleRequest = function (req, res) {
       archive.isUrlArchived(post['url'], (isArchived) => {
         if (isArchived) {
           helper.serveAssets(res, archive.paths.archivedSites + '/' + post['url'], (data) => {
-            res.writeHead(200, helper.headers);
+            res.writeHead(302, 'Found');
             res.write(data);
             res.end();
+          });
+          archive.addUrlToList(post['url'], (error) => {
+            console.log(error);
           });
         } else {
           archive.addUrlToList(post['url'], (error) => {
             console.log(error);
           });
+          
           helper.serveAssets(res, archive.paths.siteAssets + '/loading.html', (data) => {
             res.writeHead(302, 'Found'); 
             res.write(data);

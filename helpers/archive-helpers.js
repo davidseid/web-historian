@@ -72,6 +72,7 @@ exports.downloadUrls = function(urls, callback) {
   //I: list of urls
   //: Making a get request to that URL
   //:
+  callback = callback || _.identity;
 
   _.each(urls, (url) => {
     this.isUrlArchived(url, (isArchived) => { 

@@ -98,6 +98,7 @@ describe('archive helpers', function() {
       var total = 2;
 
       archive.isUrlInList('example1.com', function (exists) {
+        console.log(exists);
         expect(exists).to.be.true;
         if (++counter === total) { done(); }
       });
@@ -131,11 +132,13 @@ describe('archive helpers', function() {
       var total = 2;
 
       archive.isUrlArchived('www.example.com', function (exists) {
+        console.log(exists + ' true case');
         expect(exists).to.be.true;
         if (++counter === total) { done(); }
       });
 
       archive.isUrlArchived('www.notarchived.com', function (exists) {
+        console.log(exists + ' fail case');
         expect(exists).to.be.false;
         if (++counter === total) { done(); }
       });

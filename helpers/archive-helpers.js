@@ -1,6 +1,8 @@
 var fs = require('fs');
 var path = require('path');
+var os = require('os');
 var _ = require('underscore');
+
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -26,16 +28,76 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
+  fs.readFile(this.paths.list, (err, data) => {
+    if (err) {
+      console.log(`Error caught: ${err}`);
+    }
+    callback(data.toString().split('\n'));
+  });
+
 };
 
 exports.isUrlInList = function(url, callback) {
+ 
+  this.readListOfUrls((data) => {
+    return callback(_.contains(data, url));
+  });
+
+
+
 };
 
 exports.addUrlToList = function(url, callback) {
+  fs.appendFile(this.paths.list, url + os.EOL, callback);  
 };
 
 exports.isUrlArchived = function(url, callback) {
+  // if there is a file with name url in the archives/sites __dir
+  // apply the callback ...
+
+  fs.readFile(this.paths.archivedSites + '/' + url, (err, data) => {
+    if (err) {
+      // console.log(err);
+      return callback(false);
+    } 
+    if (data) {
+      console.log(data);
+      return callback(true);
+      // return true;
+    }
+  });
 };
 
-exports.downloadUrls = function(urls) {
+exports.downloadUrls = function(urls, callback) {
+  //I: list of urls
+  //: Making a get request to that URL
+  //:
+
+  _.each(urls, (url) => {
+    this.isUrlArchived(url, (isArchived) => { 
+      if (!isArchived) { 
+        callback(url);   
+      }
+    });
+  });
+
+
+
+
+  // _.each(urls, (url) => {
+  //   if (this.isUrlArchived(url, (isArchived) => {
+  //     if (!isArchived) {
+  //       callback(url);
+  //     }
+  //   })){
+  //     console.log('already archived');
+  //   }
+  
+  //   }))
+
+  // }) 
+
+    
+
+
 };

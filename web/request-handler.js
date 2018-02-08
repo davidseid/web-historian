@@ -36,5 +36,4 @@ exports.handleRequest = function (req, res) {
       res.end();
     });
   }
- 
 };

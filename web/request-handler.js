@@ -11,8 +11,9 @@ exports.handleRequest = function (req, res) {
   if (req.method === 'GET') {
     if (req.url === '/') {
       helper.serveAssets(res, archive.paths.siteAssets + '/index.html', (data) => {
-        res.writeHead(200, helper.headers);
-        res.end(data);
+        res.writeHead(200, helper.headers); 
+        res.write(data);
+        res.end();
       });
     }
   }

@@ -53,7 +53,7 @@ exports.handleRequest = function (req, res) {
     req.on('data', (data) => {
       body += data.toString();
     }).on('end', () => {
-      console.log(body);
+      // console.log(body);
       var post = qs.parse(body);
 
       archive.isUrlArchived(post['url'], (isArchived) => {
